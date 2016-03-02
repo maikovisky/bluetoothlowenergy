@@ -3,7 +3,7 @@
 
 # Installation 
 
-In settings.gadle
+In settings.gradle
 
 ```
 include ':app'
@@ -11,7 +11,18 @@ include ':libBluetoothLE'
 project(':libBluetoothLE').projectDir = new File('../BluetoothLowEnergy/libBluetoothLE')
 ```
 
+In build.gradle
+
+```
+dependencies {
+    ...
+
+    compile project(':libBluetoothLE')    
+}
+```
+
 Add BluetoothService in AndroidManifest.xml
+
 ```xml
 <manifest>
    ...
@@ -26,9 +37,10 @@ Add BluetoothService in AndroidManifest.xml
 
 # Code Example
 
-## Create 2 list view like this:
+Create 2 list view like this
 
-### ListView for show Bluetooth Devices
+* ListView for show Bluetooth Devices
+
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -49,7 +61,8 @@ Add BluetoothService in AndroidManifest.xml
 </LinearLayout>
 ```
 
-### ListView for show Bluetooth Device UUID
+* ListView for show Bluetooth Device UUID
+
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -118,7 +131,8 @@ Add BluetoothService in AndroidManifest.xml
 
 ```
 
-## Create a Activity for listing Bluetooth device
+* Create a Activity for listing Bluetooth device
+
 ```java
 public class MainActivity extends Activity implements BluetoothEvent {
 
@@ -166,7 +180,7 @@ public class MainActivity extends Activity implements BluetoothEvent {
 }
 ```
 
-## Create activity for list UUID os bluetooth device
+* Create activity for list UUID os bluetooth device
 
 ```java
 public class DeviceActivity extends Activity {
@@ -247,8 +261,6 @@ public class DeviceActivity extends Activity {
     }
 }
 ```
-## Getting Started
-
 
 # Contributors
 

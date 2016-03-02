@@ -1,3 +1,7 @@
+/*
+ * The MIT License (MIT)
+ * Copyright (c) 2016 Maiko de Andrade <maikovisky@gmail.com>
+ */
 package org.cetasenai.bluetoothlowenergy;
 
 import android.bluetooth.BluetoothDevice;

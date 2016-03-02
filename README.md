@@ -26,6 +26,99 @@ Add BluetoothService in AndroidManifest.xml
 
 # Code Example
 
+## Create 2 list view like this:
+
+### ListView for show Bluetooth Devices
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:orientation="vertical">
+
+	<TextView
+		android:id="@+id/txBleDeviceName"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:textSize="16dp" />
+	<TextView
+		android:id="@+id/txBleDeviceAddress"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:textSize="12dp" />
+</LinearLayout>
+```
+
+### ListView for show Bluetooth Device UUID
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="UUID: "
+        android:textSize="16dp"
+        android:id="@+id/textView2"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txGattServiceUUID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14dp"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/textView2"
+        android:paddingLeft="3dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Name: "
+        android:textSize="16dp"
+        android:id="@+id/textView3"
+        android:layout_below="@+id/txGattServiceUUID"
+        android:layout_alignParentStart="true"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12dp"
+        android:id="@+id/txGattServiceName"
+        android:layout_alignTop="@+id/textView3"
+        android:layout_alignEnd="@+id/txGattServiceUUID"
+        android:layout_toEndOf="@+id/textView3"
+        android:paddingLeft="3dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Data"
+        android:id="@+id/textView4"
+        android:layout_below="@+id/textView3"
+        android:layout_alignParentStart="true"
+        android:layout_alignEnd="@+id/txGattServiceName"
+        android:layout_centerInParent="true"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        android:textAlignment="center" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text=""
+        android:id="@+id/txGattServiceData"
+        android:layout_below="@+id/textView4"
+        android:layout_alignParentStart="true"
+        android:layout_alignEnd="@+id/txGattServiceName" />
+</RelativeLayout>
+
+```
+
+## Create a Activity for listing Bluetooth device
 ```java
 public class MainActivity extends Activity implements BluetoothEvent {
 
@@ -62,8 +155,8 @@ public class MainActivity extends Activity implements BluetoothEvent {
     }
 
 	public void onEventBluetooth(BluetoothDevice bluetoothDevice, int rssi) {
-        Log.d(TAGNAME, "[onEventBluetooth]");
-        Log.d(TAGNAME, bluetoothDevice.getBluetoothClass().toString());
+        Log.d("BLE", "[onEventBluetooth]");
+        Log.d("BLE", bluetoothDevice.getBluetoothClass().toString());
 
 		// Add BluetoothDevice in adapter
         devicesAdapter.add(bluetoothDevice, rssi);
@@ -73,6 +166,7 @@ public class MainActivity extends Activity implements BluetoothEvent {
 }
 ```
 
+## Create activity for list UUID os bluetooth device
 
 ```java
 public class DeviceActivity extends Activity {
@@ -132,21 +226,21 @@ public class DeviceActivity extends Activity {
     };
 
 	private void displayData(String action) {
-        Log.d(TAGNAME, "[displayData] Action: " + action);
+        Log.d("BLE", "[displayData] Action: " + action);
     }
 
     private void displayGattServices(List<BluetoothGattService> gattServices){
-        Log.d(TAGNAME, "[displayGattServices]");
+        Log.d("BLE", "[displayGattServices]");
         String uuid = null;
 
         if(gattServices == null) {
-            Log.w(TAGNAME, "[displayGattServices] No Bluetooth Gatt Service list.");
+            Log.w("BLE", "[displayGattServices] No Bluetooth Gatt Service list.");
             return;
         }
 
         for(BluetoothGattService gattService : gattServices) {
             uuid = gattService.getUuid().toString();
-            Log.d(TAGNAME, "[displayGattServices] UUID: " + uuid);
+            Log.d("BLE", "[displayGattServices] UUID: " + uuid);
             gattServiceAdapter.add(gattService);
         }
         gattServiceAdapter.notifyDataSetChanged();
